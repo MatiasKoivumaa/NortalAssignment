@@ -17,6 +17,7 @@ export default function AddEmployeeModal(props) {
                 jobTitle:event.target.jobTitle.value
             })
         })
+        props.onHide();
     }
   
     return (

@@ -16,7 +16,7 @@ export default function Employees() {
     const url = 'https://localhost:7122/api/Employee';
     let addModalClose = () => {setAddModalShow(false)};
     let editModalClose = () => {setEditModalShow(false)};
-    
+
     React.useEffect(() => {
         (async () => {
           const response = await fetch(url);
@@ -27,7 +27,7 @@ export default function Employees() {
 
     function deleteEmployee(id) {
       if (window.confirm('Are you sure?')) {
-        fetch('https://localhost:7122/api/Employee/'+id, {
+        fetch(url+'/'+id, {
             method:'DELETE',
             headers: {
                 'Accept':'application/json'
@@ -77,7 +77,6 @@ export default function Employees() {
               )}
           </tbody>
         </Table>
-        <AddEmployeeModal />
 
         <ButtonToolbar>
           <Button variant='primary'

@@ -1,53 +1,85 @@
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Table, Button, ButtonToolbar } from 'react-bootstrap';
+import AddProjectModal from './AddProjectModal';
+import EditProjectModal from './EditProjectModal';
 
 export default function Projects() {
 
     const [projects, setProjects] = React.useState([]);
-    const navigate = useNavigate();
+    const [addModalShow,setAddModalShow] = React.useState(false);
+    const [editModalShow,setEditModalShow] = React.useState(false);
+    const [id, setId] = React.useState([]);
+    const [projectName, setProjectName] = React.useState([]);
 
-    let url = 'https://localhost:7122/api/Project';
-
+    const url = 'https://localhost:7122/api/Project';
+    let addModalClose = () => {setAddModalShow(false)};
+    let editModalClose = () => {setEditModalShow(false)};
+    
     React.useEffect(() => {
         (async () => {
           const response = await fetch(url);
           const responseData = await response.json();
           setProjects(responseData);
         })();
-      }, [url]);
+    }, [url]);
+
+    function deleteProject(id) {
+      if (window.confirm('Are you sure?')) {
+        fetch(url+"/"+id, {
+            method:'DELETE',
+            headers: {
+                'Accept':'application/json'
+            }
+        })  
+      }
+    }
   
     return (
       <div>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 300 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  Project name
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-                {projects.map((project) => (
-                    <TableRow
-                        key={project.id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell component="th" scope="employee">
-                        {project.projectName}
-                    </TableCell>
-                    <TableCell>
-                      <Button onClick={() => {
-                        navigate("");
+        <Table className='mt-4' striped bordered hover size='sm'>
+          <thead>
+            <tr>
+              <th>Project Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {projects.map((project) =>
+              <tr key={project.id}>
+                <td>{project.projectName}</td>
+                <td>
+                  <ButtonToolbar>
+                    <Button className='mr-2' variant='info'
+                      onClick={() => {
+                        setEditModalShow(true);
+                        setId(project.id);
+                        setProjectName(project.projectName);
                       }}>
-                        Details
-                      </Button>
-                    </TableCell>
-                    </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                        Edit
+                    </Button>
+                    <Button className='mr-2' variant='danger'
+                      onClick={() => {
+                        deleteProject(project.id);
+                      }}>
+                        Delete
+                    </Button>
+                    <EditProjectModal show={editModalShow} onHide={editModalClose} id={id} projectName={projectName} />
+                  </ButtonToolbar>
+                </td>
+              </tr>
+              )}
+          </tbody>
+        </Table>
+
+        <ButtonToolbar>
+          <Button variant='primary'
+            onClick={() => {
+              setAddModalShow(true);
+            }}
+          >
+            Add Project
+          </Button>
+          <AddProjectModal show={addModalShow} onHide={addModalClose} />
+        </ButtonToolbar>
       </div>
     );
   }
