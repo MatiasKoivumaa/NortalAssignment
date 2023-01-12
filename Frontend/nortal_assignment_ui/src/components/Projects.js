@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import AddProjectModal from './AddProjectModal';
 import EditProjectModal from './EditProjectModal';
 
@@ -10,6 +11,8 @@ export default function Projects() {
     const [editModalShow,setEditModalShow] = React.useState(false);
     const [id, setId] = React.useState([]);
     const [projectName, setProjectName] = React.useState([]);
+
+    const navigate = useNavigate();
 
     const url = 'https://localhost:7122/api/Project';
     let addModalClose = () => {setAddModalShow(false)};
@@ -48,6 +51,12 @@ export default function Projects() {
                 <td>{project.projectName}</td>
                 <td>
                   <ButtonToolbar>
+                   <Button className='mr-2' variant='info'
+                      onClick={() => {
+                        navigate("/projects/"+project.id);
+                      }}>
+                        Employees
+                    </Button>
                     <Button className='mr-2' variant='info'
                       onClick={() => {
                         setEditModalShow(true);

@@ -2,10 +2,10 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Employees from './components/Employees';
 import Projects from './components/Projects';
-import SingleEmployee from './components/SingleEmployee';
 import Home from './components/Home';
 import Navigation from './components/Navigation';
-import AddEmployeeModal from './components/AddEmployeeModal';
+import EmployeeProjects from './components/EmployeeProjects';
+import ProjectEmployees from './components/ProjectEmployees';
 
 function App() {
   return (
@@ -14,9 +14,9 @@ function App() {
       <Routes>
         <Route path = '*' element = { <Home /> } />
         <Route path='/employees' element = { <Employees /> } />
-        <Route path='/employees/:id' element = { <SingleEmployee /> } />
+        <Route path='/employees/:id' element = { <EmployeeProjects /> } />
         <Route path='/projects' element = { <Projects /> } />
-        <Route path='/temp' element = { <AddEmployeeModal /> } />
+        <Route path='/projects/:id' element = { <ProjectEmployees /> } />
       </Routes>
     </div>
   );

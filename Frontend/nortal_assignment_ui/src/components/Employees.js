@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import AddEmployeeModal from './AddEmployeeModal';
 import EditEmployeeModal from './EditEmployeeModal';
 
@@ -12,6 +13,8 @@ export default function Employees() {
     const [firstName, setFirstName] = React.useState([]);
     const [lastName, setLastName] = React.useState([]);
     const [jobTitle, setJobTitle] = React.useState([]);
+
+    const navigate = useNavigate();
 
     const url = 'https://localhost:7122/api/Employee';
     let addModalClose = () => {setAddModalShow(false)};
@@ -54,6 +57,12 @@ export default function Employees() {
                 <td>{employee.jobTitle}</td>
                 <td>
                   <ButtonToolbar>
+                    <Button className='mr-2' variant='info'
+                      onClick={() => {
+                        navigate("/employees/"+employee.id);
+                      }}>
+                        Projects
+                    </Button>
                     <Button className='mr-2' variant='info'
                       onClick={() => {
                         setEditModalShow(true);
