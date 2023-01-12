@@ -1,14 +1,21 @@
 import * as React from 'react';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import AddEmployeeToProjectModal from './AddEmployeeToProjectModal';
 
 export default function ProjectEmployees() {
     
     const [project, setProject] = React.useState([]);
     const [employees, setEmployees] = React.useState([]);
+    const [addModalShow,setAddModalShow] = React.useState(false);
     
     const { id } = useParams();
     const url = 'https://localhost:7122/api/Project/'+id;
+
+    let addModalClose = () => {
+      setAddModalShow(false);
+      window.location.reload();
+    };
     
     React.useEffect(() => {
         (async () => {
@@ -26,7 +33,8 @@ export default function ProjectEmployees() {
             headers: {
                 'Accept':'application/json'
             }
-        })  
+        })
+        window.location.reload();
       }
     }
   
@@ -65,6 +73,17 @@ export default function ProjectEmployees() {
               )}
           </tbody>
         </Table>
+
+        <ButtonToolbar>
+          <Button variant='primary'
+            onClick={() => {
+              setAddModalShow(true);
+            }}
+          >
+            Add Employee To Project
+          </Button>
+          <AddEmployeeToProjectModal show={addModalShow} onHide={addModalClose} projectId={id} />
+        </ButtonToolbar>
       </div>
     );
   }

@@ -26,7 +26,8 @@ export default function EmployeeProjects() {
             headers: {
                 'Accept':'application/json'
             }
-        })  
+        }) 
+        window.location.reload();
       }
     }
   

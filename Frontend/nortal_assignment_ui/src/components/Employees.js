@@ -17,8 +17,14 @@ export default function Employees() {
     const navigate = useNavigate();
 
     const url = 'https://localhost:7122/api/Employee';
-    let addModalClose = () => {setAddModalShow(false)};
-    let editModalClose = () => {setEditModalShow(false)};
+    let addModalClose = () => {
+      setAddModalShow(false);
+      window.location.reload();
+    };
+    let editModalClose = () => {
+      setEditModalShow(false);
+      window.location.reload();
+    };
 
     React.useEffect(() => {
         (async () => {
@@ -35,7 +41,8 @@ export default function Employees() {
             headers: {
                 'Accept':'application/json'
             }
-        })  
+        })
+        window.location.reload();
       }
     }
   
@@ -44,6 +51,7 @@ export default function Employees() {
         <Table className='mt-4' striped bordered hover size='sm'>
           <thead>
             <tr>
+              <th>Employee Id</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Job Title</th>
@@ -52,18 +60,20 @@ export default function Employees() {
           <tbody>
             {employees.map((employee) =>
               <tr key={employee.id}>
+                <td>{employee.id}</td>
                 <td>{employee.firstName}</td>
                 <td>{employee.lastName}</td>
                 <td>{employee.jobTitle}</td>
                 <td>
                   <ButtonToolbar>
-                    <Button className='mr-2' variant='info'
+                    <Button className="me-4" variant='info'
                       onClick={() => {
                         navigate("/employees/"+employee.id);
                       }}>
                         Projects
                     </Button>
-                    <Button className='mr-2' variant='info'
+
+                    <Button className='me-4' variant='info'
                       onClick={() => {
                         setEditModalShow(true);
                         setId(employee.id);
@@ -73,7 +83,8 @@ export default function Employees() {
                       }}>
                         Edit
                     </Button>
-                    <Button className='mr-2' variant='danger'
+
+                    <Button variant='danger'
                       onClick={() => {
                         deleteEmployee(employee.id);
                       }}>

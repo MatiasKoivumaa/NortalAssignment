@@ -6,6 +6,7 @@ import EditProjectModal from './EditProjectModal';
 
 export default function Projects() {
 
+    //State variables
     const [projects, setProjects] = React.useState([]);
     const [addModalShow,setAddModalShow] = React.useState(false);
     const [editModalShow,setEditModalShow] = React.useState(false);
@@ -13,10 +14,17 @@ export default function Projects() {
     const [projectName, setProjectName] = React.useState([]);
 
     const navigate = useNavigate();
-
     const url = 'https://localhost:7122/api/Project';
-    let addModalClose = () => {setAddModalShow(false)};
-    let editModalClose = () => {setEditModalShow(false)};
+
+    //Functions for closing the modals
+    let addModalClose = () => {
+      setAddModalShow(false);
+      window.location.reload();
+    };
+    let editModalClose = () => {
+      setEditModalShow(false);
+      window.location.reload();
+    };
     
     React.useEffect(() => {
         (async () => {
@@ -26,6 +34,7 @@ export default function Projects() {
         })();
     }, [url]);
 
+    //Deleting a project
     function deleteProject(id) {
       if (window.confirm('Are you sure?')) {
         fetch(url+"/"+id, {
@@ -33,7 +42,8 @@ export default function Projects() {
             headers: {
                 'Accept':'application/json'
             }
-        })  
+        })
+        window.location.reload();
       }
     }
   
@@ -51,13 +61,13 @@ export default function Projects() {
                 <td>{project.projectName}</td>
                 <td>
                   <ButtonToolbar>
-                   <Button className='mr-2' variant='info'
+                   <Button className='me-4' variant='info'
                       onClick={() => {
                         navigate("/projects/"+project.id);
                       }}>
                         Employees
                     </Button>
-                    <Button className='mr-2' variant='info'
+                    <Button className='me-4' variant='info'
                       onClick={() => {
                         setEditModalShow(true);
                         setId(project.id);
@@ -65,7 +75,7 @@ export default function Projects() {
                       }}>
                         Edit
                     </Button>
-                    <Button className='mr-2' variant='danger'
+                    <Button variant='danger'
                       onClick={() => {
                         deleteProject(project.id);
                       }}>
