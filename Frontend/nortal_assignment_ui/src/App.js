@@ -12,11 +12,11 @@ function App() {
     <div className="container">
       <Navigation />
       <Routes>
-        <Route path = '*' element = { <Home /> } />
-        <Route path='/employees' element = { <Employees /> } />
-        <Route path='/employees/:id' element = { <EmployeeProjects /> } />
-        <Route path='/projects' element = { <Projects /> } />
-        <Route path='/projects/:id' element = { <ProjectEmployees /> } />
+        <Route path='*' element={<Home />} />
+        <Route path='/employees' element={<Employees />} />
+        <Route path='/employees/:id' element={<EmployeeProjects />} />
+        <Route path='/projects' element={<Projects />} />
+        <Route path='/projects/:id' element={<ProjectEmployees />} />
       </Routes>
     </div>
   );
